@@ -103,6 +103,7 @@ class ListItem {
     return Math.floor(Math.random() * 16777215).toString(16);
   }
   
+
   addItemToArray() {
     const item = { name: this.name, age: this.age, activity: this.activity, id: this.id };
     if (this.name.length > 3 && this.age > 18 && this.activity.length > 5) {
