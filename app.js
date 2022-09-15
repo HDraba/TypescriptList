@@ -12,14 +12,20 @@ var activityInput = document.getElementById('activity');
 var List = /** @class */ (function () {
     function List(type) {
         this.type = type;
-        this.createList(type);
+        this.create(type);
+        if (type === 'active') {
+            this.array = activeArray = [];
+        }
+        else {
+            this.array = doneArray = [];
+        }
     }
     List.prototype.resetInput = function () {
         nameInput.value = '';
         activityInput.value = '';
         ageInput.value = '';
     };
-    List.prototype.createList = function (type) {
+    List.prototype.create = function (type) {
         counter++;
         var listHeaderDiv = document.createElement('div');
         listHeaderDiv.style.gridArea = 'header' + counter;
@@ -27,48 +33,25 @@ var List = /** @class */ (function () {
         listHeader.textContent = type.toUpperCase() + ': ';
         var unorderedListDiv = document.createElement('div');
         unorderedListDiv.style.gridArea = 'list' + counter;
-        var unorderedList = document.createElement('ul');
+        this.domElement = document.createElement('ul');
         dropzone.appendChild(listHeaderDiv);
         listHeaderDiv.appendChild(listHeader);
         dropzone.appendChild(unorderedListDiv);
-        unorderedListDiv.appendChild(unorderedList);
-        if (type === 'active') {
-            activeArray = [];
-        }
-        else {
-            doneArray = [];
-        }
+        unorderedListDiv.appendChild(this.domElement);
     };
-    List.prototype.renderList = function () {
+    List.prototype.render = function () {
+        var _this = this;
         this.resetInput();
-        activeListEl.innerHTML = '';
+        this.domElement.innerHTML = '';
         // console.log(activeArray);
-        activeArray.forEach(function (element) {
-            var itemContainer = document.createElement('li');
-            // itemContainer.style.border = `5px solid #${this.color}`;
-            var nameEl = document.createElement('span');
-            var ageEl = document.createElement('span');
-            var activityEl = document.createElement('span');
-            nameEl.textContent = 'Name: ' + element.name;
-            ageEl.textContent = 'Age: ' + element.age.toString();
-            activityEl.textContent = 'Activity: ' + element.activity;
-            var itemMoveBtn = document.createElement('button');
-            itemMoveBtn.textContent = 'DONE';
-            // itemMoveBtn.style.boxShadow = `0px 0px 5px 5px #${item.getColor()}`;
-            itemContainer.appendChild(nameEl);
-            itemContainer.appendChild(ageEl);
-            itemContainer.appendChild(activityEl);
-            itemContainer.appendChild(itemMoveBtn);
-            activeListEl.appendChild(itemContainer);
-            // }
+        this.array.forEach(function (listItem) {
+            listItem.render(_this.domElement);
         });
     };
     return List;
 }());
 var activeList = new List('active');
-var activeListEl = dropzone.querySelector('ul');
 var doneList = new List('done');
-var doneListEl = activeListEl.nextSibling;
 var ListItem = /** @class */ (function () {
     function ListItem() {
         this.name = nameInput.value;
@@ -82,20 +65,47 @@ var ListItem = /** @class */ (function () {
         return Math.floor(Math.random() * 16777215).toString(16);
     };
     ListItem.prototype.addItemToArray = function () {
-        var item = { name: this.name, age: this.age, activity: this.activity, id: this.id };
         if (this.name.length > 3 && this.age > 18 && this.activity.length > 5) {
-            activeArray.push(item);
+            activeList.array.push(this);
         }
-        console.log('active: ', activeArray);
+        console.log('active: ', activeList.array);
         console.log('done: ', doneArray);
+        activeList.render();
+    };
+    ListItem.prototype.render = function (listEl) {
+        var _this = this;
+        var itemContainer = document.createElement('li');
+        var nameEl = document.createElement('span');
+        var ageEl = document.createElement('span');
+        var activityEl = document.createElement('span');
+        nameEl.textContent = 'Name: ' + this.name;
+        ageEl.textContent = 'Age: ' + this.age.toString();
+        activityEl.textContent = 'Activity: ' + this.activity;
+        var itemMoveBtn = document.createElement('button');
+        itemMoveBtn.textContent = 'DONE';
+        itemMoveBtn.addEventListener('click', function () {
+            _this.move();
+        });
+        itemContainer.appendChild(nameEl);
+        itemContainer.appendChild(ageEl);
+        itemContainer.appendChild(activityEl);
+        itemContainer.appendChild(itemMoveBtn);
+        listEl.appendChild(itemContainer);
+    };
+    ListItem.prototype.move = function () {
+        var _this = this;
+        activeList.array = activeList.array.filter(function (entry) {
+            return entry.id !== _this.id;
+        });
+        doneArray.push(this);
+        doneList.render();
+        activeList.render();
     };
     return ListItem;
 }());
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     var item = new ListItem();
-    activeList.renderList();
-    // const listItem = new ListItem();
 });
 /*
 // const renderList = () => {
