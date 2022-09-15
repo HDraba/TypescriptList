@@ -97,11 +97,12 @@ var ListItem = /** @class */ (function () {
         itemContainer.appendChild(activityEl);
         itemContainer.appendChild(itemMoveBtn);
         // itemContainer.style.boxShadow = `0px 0px 5px 5px #${this.color}`
+        itemContainer.setAttribute('draggable', true);
         listEl.appendChild(itemContainer);
     };
     ListItem.prototype.move = function () {
         var _this = this;
-        //  ************************************ new
+        //  ************************************ new ***************************************
         if (activeList.array.includes(this)) {
             activeList.array = activeList.array.filter(function (entry) {
                 return entry.id !== _this.id;
@@ -119,69 +120,3 @@ form.addEventListener('submit', function (e) {
     e.preventDefault();
     var item = new ListItem();
 });
-/*
-// const renderList = () => {
-// createUnorderedLists(() => createListItem())
-// }
-
-let active: HTMLUListElement;
-let counter: number = 1;
-const createUnorderedLists = () => {
-  if (!isUlRendered) {
-    active = document.createElement('ul');
-    active.textContent = 'ACTIVE';
-    const done = document.createElement('ul');
-    done.textContent = 'DONE';
-    dropzone.appendChild(active);
-    dropzone.appendChild(done);
-    isUlRendered = true;
-  }
-  const createListItem = () => {
-    const newElContainer = document.createElement('div');
-
-    const liHeader = document.createElement('h2');
-    liHeader.textContent = `Item ${counter}`;
-    
-    const newLiElName = document.createElement('li');
-    newLiElName.textContent = 'Name: ' + nameInput.value;
-
-    const newLiElAge = document.createElement('li');
-    newLiElAge.textContent = 'Age: ' + ageInput.value;
-
-    const newLiElActivity = document.createElement('li');
-    newLiElActivity.textContent = 'Activity: ' + activityInput.value;
-
-    const newLiElBtn = document.createElement('button');
-    newLiElBtn.textContent = 'DONE';
-
-    counter++;
-    newElContainer.appendChild(liHeader);
-    newElContainer.appendChild(newLiElName);
-    newElContainer.appendChild(newLiElAge);
-    newElContainer.appendChild(newLiElActivity);
-    newElContainer.appendChild(newLiElBtn);
-    active.appendChild(newElContainer);
-  };
-  createListItem();
-};
-
-const clearInputs = () => {
-  nameInput.value = '';
-  ageInput.value = '';
-  activityInput.value = '';
-};
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  //   renderList()
-  createUnorderedLists();
-  //   createListItem()
-  //   const obj = {
-  // nameValue: nameInput.value,
-  // ageValue: ageInput.value,
-  // activityValue: activityInput.value,
-  //   };
-  //   console.log(obj.nameValue);
-  clearInputs();
-});
-*/
