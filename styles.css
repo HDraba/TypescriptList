@@ -1,11 +1,11 @@
 body {
   background-color: #100535;
   font-family: sans-serif;
-  color: #41C001;
+  color: #41c001;
 }
 
 /* div { */
-  /* border: 2px solid #d13537; */
+/* border: 2px solid #d13537; */
 /* } */
 
 #header-container {
@@ -19,79 +19,72 @@ body {
 }
 
 form p {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
   margin: 20px;
   margin-bottom: 10px;
 }
 
 form input {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
   width: 400px;
   margin-left: 5px;
 }
 
 form div {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 #button-container {
-    margin: 15px;
+  margin: 15px;
 }
 
 #add-project {
-        font-size: 1.5rem;
-        margin: 7px;
+  font-size: 1.5rem;
+  margin: 7px;
 }
 
 /* ----------------------------------------- Dropzone ---------------------------------- */
 
-
 #dropzone {
-    position: relative;
-    display: grid;
-    justify-content: center;
-    grid-template-columns: 600px 400px;
-    grid-template-rows: auto;
-    grid-template-areas: 
+  position: relative;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 600px 400px;
+  grid-template-rows: auto;
+  grid-template-areas:
     'header1 header2'
-    'list1 list2'
+    'list1 list2';
 }
 
 #dropzone ul {
-    padding: 5px;
-    border: 10px solid black;
-    box-shadow: 0 0 10px 10px #BADA55;
-    width: 350px;
-    background-color: #BAD6E5;
-    color: black;
-    transition: width 0.5s, font-size 0.5s;
-}
-
-#dropzone ul:hover {
-    width: 400px;
-    /* height: auto; */
-    font-size: 2.7rem;
+  padding: 5px;
+  border: 10px solid black;
+  box-shadow: 0 0 10px 10px #bada55;
+  width: 350px;
+  background-color: #bad6e5;
+  color: black;
+  /* transition: width 0.5s, font-size 0.5s; */
 }
 
 #dropzone h2 {
-    font-size: 2rem;
-    margin: 5px;
+  font-size: 2rem;
+  margin: 5px;
 }
 
 #dropzone button {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 li {
-    display: block;
-    position: relative;
-    justify-content: center;
-    font-size: 1.5rem;
-    list-style: none;
-    }
+  display: block;
+  position: relative;
+  justify-content: center;
+  font-size: 1.5rem;
+  list-style: none;
+}
 
 li span {
-    display: block;
-    margin: 10px;
+  display: block;
+  margin: 10px;
 }

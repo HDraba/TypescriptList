@@ -1,3 +1,6 @@
+// class = interface + mehr Funktionen, zb Instanzierung
+// Liste sollte die Liste rendern und das ListenItem das ListenItem - einzelne render Methoden 
+// .find bei genau einem Wert, .filter bei mehreren 
 var isUlRendered = false;
 var activeArray;
 var doneArray;
@@ -34,6 +37,7 @@ var List = /** @class */ (function () {
         var unorderedListDiv = document.createElement('div');
         unorderedListDiv.style.gridArea = 'list' + counter;
         this.domElement = document.createElement('ul');
+        // this-doElement statt unorderedList als Variable 
         dropzone.appendChild(listHeaderDiv);
         listHeaderDiv.appendChild(listHeader);
         dropzone.appendChild(unorderedListDiv);
@@ -43,10 +47,12 @@ var List = /** @class */ (function () {
         var _this = this;
         this.resetInput();
         this.domElement.innerHTML = '';
+        // leeren der ul
         // console.log(activeArray);
         this.array.forEach(function (listItem) {
             listItem.render(_this.domElement);
         });
+        // basierend auf dem array die Item render Methode abrufen für jedes Item
     };
     return List;
 }());
@@ -90,14 +96,20 @@ var ListItem = /** @class */ (function () {
         itemContainer.appendChild(ageEl);
         itemContainer.appendChild(activityEl);
         itemContainer.appendChild(itemMoveBtn);
+        // itemContainer.style.boxShadow = `0px 0px 5px 5px #${this.color}`
         listEl.appendChild(itemContainer);
     };
     ListItem.prototype.move = function () {
         var _this = this;
-        activeList.array = activeList.array.filter(function (entry) {
-            return entry.id !== _this.id;
-        });
-        doneArray.push(this);
+        //  ************************************ new
+        if (activeList.array.includes(this)) {
+            activeList.array = activeList.array.filter(function (entry) {
+                return entry.id !== _this.id;
+            });
+            doneArray.push(this);
+        }
+        else
+            (doneList.array.splice(this));
         doneList.render();
         activeList.render();
     };

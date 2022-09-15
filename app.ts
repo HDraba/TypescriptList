@@ -1,3 +1,7 @@
+// class = interface + mehr Funktionen, zb Instanzierung
+// Liste sollte die Liste rendern und das ListenItem das ListenItem - einzelne render Methoden 
+// .find bei genau einem Wert, .filter bei mehreren 
+
 let isUlRendered = false;
 let activeArray: ListItem[];
 let doneArray: ListItem[];
@@ -42,6 +46,7 @@ class List {
     const unorderedListDiv = document.createElement('div');
     unorderedListDiv.style.gridArea = 'list' + counter;
     this.domElement = document.createElement('ul');
+// this-doElement statt unorderedList als Variable 
 
     dropzone.appendChild(listHeaderDiv);
     listHeaderDiv.appendChild(listHeader);
@@ -53,11 +58,13 @@ class List {
     this.resetInput();
 
     this.domElement.innerHTML = '';
+    // leeren der ul
 
     // console.log(activeArray);
     this.array.forEach((listItem) => {
       listItem.render(this.domElement);
     });
+    // basierend auf dem array die Item render Methode abrufen für jedes Item
   }
 }
 
@@ -102,20 +109,26 @@ class ListItem {
     itemMoveBtn.addEventListener('click', () => {
       this.move();
     });
-
+    
     itemContainer.appendChild(nameEl);
     itemContainer.appendChild(ageEl);
     itemContainer.appendChild(activityEl);
     itemContainer.appendChild(itemMoveBtn);
-
+    // itemContainer.style.boxShadow = `0px 0px 5px 5px #${this.color}`
+    
     listEl!.appendChild(itemContainer);
   }
 
   move() {
-     activeList.array = activeList.array.filter((entry) => {
+    //  ************************************ new
+    if (activeList.array.includes(this)) {
+    activeList.array = activeList.array.filter((entry) => {
       return entry.id !== this.id;
     });
-    doneArray.push(this);
+      doneArray.push(this);
+    }   else (
+      doneList.array.splice(this)      
+    )
 
     doneList.render();
     activeList.render();
